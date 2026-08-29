@@ -49,3 +49,25 @@ function playRound(humanChoice, computerChoice) {
         }
     }
 }
+
+function playGame() {
+    // Iterate 5 times
+    for (let i = 0; i < 5; i ++) {
+        //Ask user for choice
+        humanChoice = getHumanChoice()
+        //Get computer's choice
+        computerChoice = getComputerChoice()
+        //Call playround with the choices
+        playRound(humanChoice, computerChoice)
+    }
+    //Determine the winner
+    if (humanScore === computerScore) {
+        console.log("Five intense rounds but it is still a draw!")
+    } else if (humanScore > computerScore) {
+        console.log("Congratulations! YOU WIN!!!")
+    } else {
+        console.log("Game over! You lose :(")
+    }
+}
+
+playGame();
