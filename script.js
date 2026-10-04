@@ -7,67 +7,83 @@ function getComputerChoice() {
     } else {
         return"scissors";
     }
-}
+};
 
-function getHumanChoice() {
-    return prompt("Please enter your choice: ").toLowerCase()
-}
+let humanScore = 0;
+let computerScore = 0;
 
-let humanScore = 0
-let computerScore = 0
+let playerScore = document.getElementById("playerScore");
+let PCScore = document.getElementById("PCScore");
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === "rock"){
         if (computerChoice === "rock"){
-            console.log("That's a draw!");
+            roundResult.textContent = "That's a draw!";
         } else if (computerChoice === "paper"){
             computerScore ++;
-            console.log("You lose! Paper beats rock");
+            roundResult.textContent = "You lose! Paper beats rock!";
+            PCScore.textContent = computerScore;
         } else {
             humanScore ++;
-            console.log("You win! Rock beats scissors");
+            roundResult.textContent = "You win! Rock beats scissors";
+            playerScore.textContent = humanScore;
         }
     } else if (humanChoice === "paper"){
         if (computerChoice === "rock"){
             humanScore ++;
-            console.log("You win! Paper beats scissors");
+            roundResult.textContent = "You win! Paper beats scissors";
+            playerScore.textContent = humanScore;
         } else if (computerChoice === "paper"){
-            console.log("That's a draw!");
+            roundResult.textContent = "That's a draw!";
         } else {
             computerScore ++;
-            console.log("You lose! Scissors beat paper");
+            roundResult.textContent = "You lose! Scissors beat paper";
+            PCScore.textContent = computerScore;
         }
     } else {
         if (computerChoice === "rock"){
             computerScore ++;
-            console.log("You lose! Rock beats scissors");
+            roundResult.textContent = "You lose! Rock beats scissors";
+            PCScore.textContent = computerScore;
         } else if (computerChoice === "paper"){
             humanScore ++;
-            console.log("You win! Scissors beat paper");
+            roundResult.textContent = "You win! Scissors beat paper";
+            playerScore.textContent = humanScore;
         } else {
-            console.log("That's a draw!")
+            roundResult.textContent = "That's a draw!";
         }
     }
-}
+};
 
-function playGame() {
-    // Iterate 5 times
-    for (let i = 0; i < 5; i ++) {
-        //Ask user for choice
-        humanChoice = getHumanChoice()
-        //Get computer's choice
-        computerChoice = getComputerChoice()
-        //Call playround with the choices
-        playRound(humanChoice, computerChoice)
+function gameWinner(humanScore, computerScore){
+    if (humanScore === 5){
+        scores.remove();
+        title.textContent = "Congratulations, YOU WIN!";
+    } else if (computerScore === 5){
+        scores.remove();
+        title.textContent = "Game Over! Better luck next time.";
     }
-    //Determine the winner
-    if (humanScore === computerScore) {
-        console.log("Five intense rounds but it is still a draw!")
-    } else if (humanScore > computerScore) {
-        console.log("Congratulations! YOU WIN!!!")
-    } else {
-        console.log("Game over! You lose :(")
-    }
-}
+};
 
-playGame();
+const rockBtn = document.getElementById("rockBtn");
+const paperBtn = document.getElementById("paperBtn");
+const scissorsBtn = document.getElementById("scissorsBtn");
+const roundResult = document.getElementById("roundResult");
+
+rockBtn.addEventListener('click', () => {
+    playRound("rock", getComputerChoice());
+    gameWinner(humanScore, computerScore);
+});
+
+paperBtn.addEventListener('click', () => {
+    playRound("paper", getComputerChoice());
+    gameWinner(humanScore, computerScore);
+});
+
+scissorsBtn.addEventListener('click', () => {
+    playRound("scissors", getComputerChoice());
+    gameWinner(humanScore, computerScore);
+});
+
+const scores = document.getElementById("scores");
+const title = document.getElementById("title");
